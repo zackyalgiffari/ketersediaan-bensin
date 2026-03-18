@@ -18,6 +18,7 @@ export default function FuelToggle({ type, status, onToggle }: FuelToggleProps) 
           className={`text-xs font-medium ${
             isAvailable ? 'text-green-600' : 'text-red-600'
           }`}
+          aria-hidden="true"
         >
           {isAvailable ? 'Tersedia' : 'Kosong'}
         </span>
@@ -27,12 +28,13 @@ export default function FuelToggle({ type, status, onToggle }: FuelToggleProps) 
             checked={isAvailable}
             onChange={onToggle}
             className="sr-only peer"
+            aria-label={`${FUEL_LABELS[type]}: ${isAvailable ? 'Tersedia' : 'Kosong'}`}
           />
           <div
-            onClick={onToggle}
-            className={`w-11 h-6 rounded-full transition-colors cursor-pointer ${
+            className={`w-11 h-6 rounded-full transition-[background-color] cursor-pointer peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500 peer-focus-visible:ring-offset-2 ${
               isAvailable ? 'bg-green-500' : 'bg-red-400'
             }`}
+            aria-hidden="true"
           >
             <div
               className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${

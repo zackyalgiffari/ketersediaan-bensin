@@ -21,6 +21,7 @@ export default function FuelStatusBadge({ type, status }: FuelStatusBadgeProps) 
         className={`w-2 h-2 rounded-full ${
           isAvailable ? 'bg-green-500' : 'bg-red-500'
         }`}
+        aria-hidden="true"
       />
       {FUEL_LABELS[type]}: {isAvailable ? 'Tersedia' : 'Kosong'}
     </span>

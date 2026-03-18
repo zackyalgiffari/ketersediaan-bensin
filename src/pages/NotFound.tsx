@@ -8,7 +8,7 @@ export default function NotFound() {
         <p className="text-lg text-gray-600 mb-6">Halaman tidak ditemukan</p>
         <Link
           to="/"
-          className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors no-underline"
+          className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-[background-color] no-underline"
         >
           Kembali ke Beranda
         </Link>

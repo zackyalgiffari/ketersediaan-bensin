@@ -25,7 +25,7 @@ AuthProvider wraps outermost because ProtectedRoute (inside the router) needs au
 
 All localStorage access is isolated in `src/data/storage.ts` (versioned keys: `spbu-data:v1`, `auth:v1`). This is the single migration point when moving to a backend API.
 
-- **SpbuContext**: lazy-inits from localStorage, auto-persists via `useEffect` on every `stations` change
+- **SpbuContext**: lazy-inits from localStorage, auto-persists via `useEffect` on every `stations` change. Listens for `storage` events to sync state across browser tabs (e.g. admin changes reflected in public tab).
 - **AuthContext**: credentials validated against `VITE_ADMIN_USERNAME` / `VITE_ADMIN_PASSWORD` env vars
 
 ### Routing

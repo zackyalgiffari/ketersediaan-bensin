@@ -1,11 +1,12 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import type { Spbu, FuelType } from '../types/spbu';
+import type { Spbu, FuelType, FuelStatus } from '../types/spbu';
 import { loadSpbuData, saveSpbuData } from '../data/storage';
 
 interface SpbuContextValue {
   stations: Spbu[];
   toggleFuelStatus: (stationId: string, fuelType: FuelType) => void;
+  setAllFuelStatus: (status: FuelStatus) => void;
   updateAllTimestamps: () => void;
 }
 
@@ -37,6 +38,17 @@ export function SpbuProvider({ children }: { children: ReactNode }) {
     );
   }
 
+  function setAllFuelStatus(status: FuelStatus) {
+    const now = new Date().toISOString();
+    setStations(prev =>
+      prev.map(station => ({
+        ...station,
+        fuels: station.fuels.map(fuel => ({ ...fuel, status })),
+        lastUpdated: now,
+      }))
+    );
+  }
+
   function updateAllTimestamps() {
     const now = new Date().toISOString();
     setStations(prev =>
@@ -44,8 +56,21 @@ export function SpbuProvider({ children }: { children: ReactNode }) {
     );
   }
 
+  const handleStorageChange = useCallback((e: StorageEvent) => {
+    if (e.key === 'spbu-data:v1' && e.newValue) {
+      try {
+        setStations(JSON.parse(e.newValue) as Spbu[]);
+      } catch { /* ignore corrupted data */ }
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [handleStorageChange]);
+
   return (
-    <SpbuContext.Provider value={{ stations, toggleFuelStatus, updateAllTimestamps }}>
+    <SpbuContext.Provider value={{ stations, toggleFuelStatus, setAllFuelStatus, updateAllTimestamps }}>
       {children}
     </SpbuContext.Provider>
   );

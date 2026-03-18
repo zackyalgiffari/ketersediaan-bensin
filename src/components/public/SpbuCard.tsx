@@ -10,8 +10,8 @@ interface SpbuCardProps {
 export default function SpbuCard({ station }: SpbuCardProps) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-      <h2 className="text-lg font-bold text-gray-900 mb-1">{station.name}</h2>
-      <p className="text-sm text-gray-600 mb-4">{station.address}</p>
+      <h2 className="text-lg font-bold text-gray-900 mb-1 text-pretty">{station.name}</h2>
+      <p className="text-sm text-gray-600 mb-4 line-clamp-2">{station.address}</p>
 
       <div className="flex flex-wrap gap-2 mb-4">
         {station.fuels.map(fuel => (
@@ -19,7 +19,7 @@ export default function SpbuCard({ station }: SpbuCardProps) {
         ))}
       </div>
 
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center justify-between gap-3 min-w-0">
         <LastUpdatedText isoDate={station.lastUpdated} />
         <MapsButton url={station.mapsUrl} />
       </div>

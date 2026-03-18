@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { FormEvent } from 'react';
 
 interface LoginFormProps {
@@ -9,6 +9,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const usernameRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -16,6 +17,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
 
     if (!username || !password) {
       setError('Username dan password harus diisi');
+      usernameRef.current?.focus();
       return;
     }
 
@@ -32,11 +34,15 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
           Username
         </label>
         <input
+          ref={usernameRef}
           id="username"
           type="text"
+          name="username"
           value={username}
           onChange={e => setUsername(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Masukkan username…"
+          spellCheck={false}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           autoComplete="username"
         />
       </div>
@@ -47,18 +53,20 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         <input
           id="password"
           type="password"
+          name="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Masukkan password…"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           autoComplete="current-password"
         />
       </div>
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert" aria-live="polite">{error}</p>
       )}
       <button
         type="submit"
-        className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+        className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-[background-color] cursor-pointer"
       >
         Login
       </button>
