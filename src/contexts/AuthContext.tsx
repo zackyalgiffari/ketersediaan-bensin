@@ -11,8 +11,8 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const VALID_USERNAME = 'admin';
-const VALID_PASSWORD = 'admin123';
+const VALID_USERNAME = import.meta.env.VITE_ADMIN_USERNAME;
+const VALID_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => loadAuthState());

@@ -10,73 +10,91 @@
 ---
 
 ## 1. Ringkasan Eksekutif
-Website ini adalah dashboard sederhana yang menampilkan status ketersediaan BBM (Pertalite, Bio Solar, Pertamax, dll) di seluruh SPBU Reguler Kabupaten Solok. Data diperbarui secara eksklusif oleh **Admin** (pengelola) berdasarkan informasi valid dari lapangan.
+
+Website dashboard sederhana yang menampilkan status ketersediaan BBM (Pertalite, Bio Solar, Pertamax, Pertamina Dex) di seluruh SPBU Reguler Kabupaten Solok. Data diperbarui secara eksklusif oleh **Admin** (pengelola) berdasarkan informasi valid dari lapangan.
 
 ## 2. Fitur Utama (Functional Requirements)
 
 ### A. Tampilan Pengguna (Public View)
-1.  **List SPBU Terpusat:** Daftar semua SPBU Reguler di Kabupaten Solok dalam bentuk kartu (card).
-2.  **Indikator Stok Visual:**
-    * 🟢 **Tersedia:** Stok ada.
-    * 🔴 **Kosong:** Stok sedang habis/dalam perjalanan.
-3.  **Detail Produk:** Menampilkan status untuk setiap jenis BBM (Pertalite, Pertamax, Bio Solar, Dexlite).
-4.  **Integrasi Navigasi:** Tombol "Buka di Maps" yang langsung mengarahkan ke lokasi SPBU via Google Maps.
-5.  **Timestamp Admin:** Keterangan *"Terakhir diperbarui oleh Admin: [Waktu/Tanggal]"* untuk memberi kepastian pada pengguna.
+
+1. **List SPBU Terpusat:** Daftar 6 SPBU Reguler di Kabupaten Solok dalam bentuk kartu (card) dengan responsive grid (1 kolom mobile, 2 tablet, 3 desktop).
+2. **Indikator Stok Visual:**
+   - 🟢 **Tersedia:** Stok ada (badge hijau).
+   - 🔴 **Kosong:** Stok sedang habis/dalam perjalanan (badge merah).
+3. **Detail Produk:** Menampilkan status untuk setiap jenis BBM: Pertalite, Pertamax, Bio Solar, Pertamina Dex.
+4. **Integrasi Navigasi:** Tombol "Buka di Maps" yang langsung mengarahkan ke lokasi SPBU via Google Maps (membuka di tab baru).
+5. **Timestamp Admin:** Keterangan *"Terakhir diperbarui: [Waktu/Tanggal] WIB"* dalam format Indonesia (`id-ID`, timezone `Asia/Jakarta`).
 
 ### B. Panel Admin (Restricted Access)
-1.  **Login Admin:** Halaman masuk aman menggunakan *username* dan *password*.
-2.  **Dashboard Update Cepat:**
-    * Daftar SPBU dengan tombol *toggle* (saklar) sederhana untuk mengubah status BBM dari "Tersedia" ke "Kosong" atau sebaliknya.
-    * Tombol "Update All" untuk memperbarui *timestamp* secara massal.
+
+1. **Login Admin:** Halaman login (`/admin/login`) dengan username dan password.
+2. **Dashboard Update Cepat** (`/admin`):
+   - Daftar SPBU dengan tombol **toggle** (saklar) per jenis BBM untuk mengubah status dari "Tersedia" ke "Kosong" atau sebaliknya.
+   - Tombol **"Update Semua Timestamp"** untuk memperbarui timestamp seluruh SPBU secara massal.
+3. **Logout:** Tombol logout di header admin.
+4. **Protected Route:** Halaman admin hanya bisa diakses setelah login; redirect otomatis ke `/admin/login` jika belum autentikasi.
 
 ---
 
 ## 3. Struktur Konten (Data Display)
 
-Setiap kartu SPBU akan menampilkan informasi berikut secara konsisten:
+Setiap kartu SPBU menampilkan informasi berikut:
 
 | Nama Kolom | Contoh Data |
 | :--- | :--- |
-| **Nama SPBU** | SPBU 14.273.111 Lubuk Selasih |
-| **Alamat/Area** | Jalur Lintas Sumatera - Kec. Gunung Talang |
+| **Nama SPBU** | SPBU Lubuk Selasih |
+| **Alamat/Area** | Simpang arah Padang - Solok - Muara Labuh |
 | **Status Pertalite** | 🟢 Tersedia |
-| **Status Bio Solar** | 🔴 Kosong |
-| **Status Pertamax** | 🟢 Tersedia |
-| **Link Maps** | [Link Google Maps Resmi] |
-| **Last Update** | 18 Maret 2026, 14:00 WIB |
+| **Status Pertamax** | 🔴 Kosong |
+| **Status Bio Solar** | 🟢 Tersedia |
+| **Status Pertamina Dex** | 🔴 Kosong |
+| **Link Maps** | Tombol "Buka di Maps" |
+| **Last Update** | 18 Maret 2026, 14.00 WIB |
 
 ---
 
-## 4. Daftar SPBU Prioritas (Dataset Awal)
-Berikut adalah titik SPBU Reguler di Kabupaten Solok yang akan masuk ke sistem:
-1.  **SPBU Lubuk Selasih** (Simpang arah Padang - Solok - Muara Labuh).
-2.  **SPBU Koto Baru** (Kec. Kubung - Jalur utama).
-3.  **SPBU Saok Laweh** (Arah Kota Solok).
-4.  **SPBU Alahan Panjang** (Kec. Lembah Gumanti).
-5.  **SPBU Sumani** (Kec. X Koto Singkarak).
-6.  **SPBU Talang** (Kec. Gunung Talang).
+## 4. Daftar SPBU (Dataset Awal)
+
+6 SPBU Reguler di Kabupaten Solok:
+
+1. **SPBU Lubuk Selasih** — Simpang arah Padang - Solok - Muara Labuh
+2. **SPBU Koto Baru** — Kec. Kubung - Jalur Utama
+3. **SPBU Saok Laweh** — Arah Kota Solok
+4. **SPBU Alahan Panjang** — Kec. Lembah Gumanti
+5. **SPBU Sumani** — Kec. X Koto Singkarak
+6. **SPBU Talang** — Kec. Gunung Talang
 
 ---
 
-## 5. Arsitektur Teknis (Simple Stack)
-* **Frontend:** HTML5, Tailwind CSS (untuk tampilan yang bersih di HP).
-* **Backend:** PHP atau Node.js sederhana untuk memproses login admin.
-* **Database:** MySQL atau Google Sheets (sebagai database sederhana) untuk menyimpan status stok.
-* **Keamanan:** Enkripsi password admin dan proteksi folder `/admin` agar tidak bisa diakses publik.
+## 5. Arsitektur Teknis
+
+Lihat [architecture.md](./architecture.md) untuk detail teknis lengkap.
+
+| Layer | Teknologi |
+| :--- | :--- |
+| **Frontend** | React 19 + TypeScript + Vite |
+| **Styling** | Tailwind CSS v4 |
+| **Routing** | React Router v7 (library mode) |
+| **State** | React Context API |
+| **Persistence** | localStorage (versioned, siap migrasi ke API) |
 
 ---
 
 ## 6. Alur Kerja (Workflow)
-1.  Admin menerima informasi stok (via telepon/grup koordinasi/petugas lapangan).
-2.  Admin login ke `/admin`.
-3.  Admin mengubah status BBM di SPBU terkait.
-4.  Admin menekan "Simpan".
-5.  Website publik secara otomatis langsung menampilkan data terbaru.
+
+1. Admin menerima informasi stok (via telepon/grup koordinasi/petugas lapangan).
+2. Admin login ke `/admin/login` dengan username & password.
+3. Admin toggle status BBM di SPBU terkait (perubahan langsung tersimpan).
+4. Admin opsional tekan "Update Semua Timestamp" untuk refresh waktu.
+5. Website publik (`/`) langsung menampilkan data terbaru (shared state via Context).
 
 ---
 
 ## 7. Desain Antarmuka (UI/UX)
-* **Simpel & Kontras:** Background putih, teks hitam, dengan indikator warna (Merah/Hijau) yang sangat kontras agar mudah dibaca di bawah sinar matahari saat di jalan.
-* **Tanpa Iklan/Pop-up:** Menjamin kecepatan akses (loading speed) yang maksimal.
+
+- **Simpel & Kontras:** Background putih, teks hitam, indikator warna hijau/merah yang sangat kontras — mudah dibaca di bawah sinar matahari.
+- **Mobile-First Responsive:** Grid 1 kolom di mobile, 2 di tablet, 3 di desktop.
+- **Tanpa Iklan/Pop-up:** Kecepatan akses maksimal.
+- **Navigasi Minimal:** Public view hanya header + grid kartu. Admin view hanya header + toggles.
 
 ---
